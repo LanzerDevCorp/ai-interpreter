@@ -46,9 +46,9 @@ Chain strategy: pending
 
 ## Phase 4: UI Components (depends on 1.1; independent of Phase 2/3)
 
-- [ ] 4.1 `[P]` `components/DirectionToggle.tsx`: `{value,onChange}` ES/KO segmented control (shadcn `Switch`). Spec: interpreter-ui Req2 (changes next turn only, no retroactive effect). Gate: tc/lint/build.
-- [ ] 4.2 `[P]` `components/SpanishPanel.tsx`: chronological `Turn[]` list in `ScrollArea`; shows `original` when `direction==='es-ko'` else `translated`; gloss under speaker's side; status visuals per design (`Skeleton`+`Badge` transcribing/translating, editable `Textarea`+"Enviar" for draft, destructive `Badge` on error); `Card`+`Separator` per turn. Spec: interpreter-ui Req1, Req3. Gate: tc/lint/build.
-- [ ] 4.3 `[P]` `components/KoreanPanel.tsx`: symmetric mirror of 4.2 for Korean. Spec: interpreter-ui Req3 (independent ordering per panel). Gate: tc/lint/build.
+- [x] 4.1 `[P]` `components/DirectionToggle.tsx`: `{value,onChange}` ES/KO segmented control (shadcn `Switch`). Spec: interpreter-ui Req2 (changes next turn only, no retroactive effect). Gate: tc/lint/build.
+- [x] 4.2 `[P]` `components/SpanishPanel.tsx`: chronological `Turn[]` list in `ScrollArea`; shows `original` when `direction==='es-ko'` else `translated`; gloss under speaker's side; status visuals per design (`Skeleton`+`Badge` transcribing/translating, editable `Textarea`+"Enviar" for draft, destructive `Badge` on error); `Card`+`Separator` per turn. Spec: interpreter-ui Req1, Req3. Gate: tc/lint/build.
+- [x] 4.3 `[P]` `components/KoreanPanel.tsx`: symmetric mirror of 4.2 for Korean. Spec: interpreter-ui Req3 (independent ordering per panel). Gate: tc/lint/build.
 
 ## Phase 5: UI Wiring (depends on 2.3, 3.3, 3.4, 4.1–4.3)
 
