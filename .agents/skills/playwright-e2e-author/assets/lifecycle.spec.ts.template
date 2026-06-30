@@ -1,0 +1,66 @@
+import { expect, test, type Page } from "@playwright/test";
+import { STORAGE_STATE } from "./fixtures/auth";
+import { makeEntity, getIdByMarker, hasEnv, ensurePrereqs } from "./fixtures/db";
+import { submitAsVisitor, actViaAffordanceA, actViaAffordanceB } from "./actions/entity";
+
+/**
+ * {FLOW} — tagged, helper-composed, two-context critical path.
+ *
+ * Tags drive selective runs (see FLOWS.md): `@{flow}` master, plus branch/edge
+ * tags. Each test models real actors with separate browser contexts.
+ */
+test.describe("{FLOW}", () => {
+  test.beforeAll(async () => {
+    if (!hasEnv) {
+      test.skip(true, "Requires local Supabase with service role key");
+      return;
+    }
+    await ensurePrereqs();
+  });
+
+  async function adminPage(browser: import("@playwright/test").Browser): Promise<Page> {
+    const ctx = await browser.newContext({ storageState: STORAGE_STATE });
+    return ctx.newPage();
+  }
+
+  test(
+    "visitor action is visible to staff",
+    { tag: ["@{flow}", "@create", "@critical"] },
+    async ({ browser }) => {
+      const data = makeEntity();
+      const anon = await browser.newContext();
+      await submitAsVisitor(await anon.newPage(), data);
+      await anon.close();
+
+      const admin = await adminPage(browser);
+      await admin.goto("/dashboard");
+      await expect(admin.getByText(data.marker)).toBeVisible({ timeout: 10_000 });
+      await admin.context().close();
+    },
+  );
+
+  // Same outcome via different affordances → parameterize. Add a branch = one entry.
+  const strategies = [
+    { name: "affordance A", tag: "@a", run: actViaAffordanceA },
+    { name: "affordance B", tag: "@b", run: actViaAffordanceB },
+  ];
+
+  for (const s of strategies) {
+    test(
+      `outcome via ${s.name}`,
+      { tag: ["@{flow}", "@outcome", s.tag] },
+      async ({ browser }) => {
+        const data = makeEntity();
+        const anon = await browser.newContext();
+        await submitAsVisitor(await anon.newPage(), data);
+        await anon.close();
+        const id = await getIdByMarker(data.marker);
+
+        const admin = await adminPage(browser);
+        await s.run(admin, id);
+        // assert the converged outcome here
+        await admin.context().close();
+      },
+    );
+  }
+});

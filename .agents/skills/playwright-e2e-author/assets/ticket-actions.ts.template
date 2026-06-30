@@ -1,0 +1,37 @@
+import { expect, type Page } from "@playwright/test";
+
+/**
+ * Action helpers ("skills") — one function per affordance, composed by specs.
+ * Author each via the Playwright MCP, then reuse across flows and branches.
+ * Never inline these selectors in a spec; add or reuse a helper here.
+ */
+
+// Drive a form / page region.
+export async function doSomething(page: Page, value: string) {
+  await page.goto("/some-route");
+  await page.getByLabel(/field label/i).fill(value);
+  await page.getByRole("button", { name: /submit/i }).click();
+  await expect(page.getByRole("heading", { name: /success/i })).toBeVisible({
+    timeout: 10_000,
+  });
+}
+
+// When a UI control does NOT optimistically refetch, sync on the server action
+// response instead of waiting for a DOM change.
+export async function actThenSync(page: Page, name: RegExp) {
+  const button = page.getByRole("button", { name });
+  await expect(button).toBeVisible();
+  await Promise.all([
+    page.waitForResponse(
+      (r) =>
+        r.request().method() === "POST" &&
+        r.request().headers()["next-action"] !== undefined,
+    ),
+    button.click(),
+  ]);
+}
+
+// Anchor by ROLE when a label string also names a container (aria-labelledby).
+export async function fillInDialog(page: Page, label: RegExp, value: string) {
+  await page.getByRole("textbox", { name: label }).fill(value);
+}

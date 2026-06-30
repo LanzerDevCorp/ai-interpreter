@@ -1,0 +1,40 @@
+# E2E Flow Map — {project}
+
+Source of truth for E2E coverage. **Before extending**: read the flow's entry,
+reuse its action helpers, add the branch as a tagged test, flip ✅/⬜. **Before a
+new flow**: add a section.
+
+## Building blocks
+
+| Concern | Location |
+|---------|----------|
+| Action helpers | `tests/e2e/actions/*` |
+| Data + DB fixtures | `tests/e2e/fixtures/db.ts` |
+| Auth / persisted session | `tests/e2e/global.setup.ts` → `tests/e2e/.auth/*.json` |
+
+## Tag taxonomy
+
+`@{flow}` (master) · `@create` · `@{outcome}` · `@{affordance}` · `@negative` ·
+`@rbac` · `@critical`
+
+## Selective runs
+
+| Want | Command |
+|------|---------|
+| Master flow | `npx playwright test --grep @{flow} --project=chromium` |
+| One branch | `npx playwright test --grep @{affordance} --project=chromium` |
+| Exclude negatives | `npx playwright test --grep-invert @negative --project=chromium` |
+| Watch slow | prefix `SLOWMO=800` + `--headed`, or `--ui` |
+
+## Flow: {name}
+
+File: `tests/e2e/{flow}.spec.ts`
+
+| Step / branch | Affordance | Tags | Status |
+|---------------|-----------|------|--------|
+| {step} | {ui} | `@create @critical` | ✅ |
+| {branch} | {ui} | `@{outcome} @{affordance}` | ⬜ TODO |
+
+### Edge cases discovered (backlog)
+
+- {edge case to cover later}
