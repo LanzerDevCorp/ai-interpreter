@@ -52,8 +52,8 @@ Chain strategy: pending
 
 ## Phase 5: UI Wiring (depends on 2.3, 3.3, 3.4, 4.1–4.3)
 
-- [ ] 5.1 Rewrite `app/page.tsx` (`'use client'`): `useReducer` for `{turns,draft,captureStatus}` with named actions covering record→transcribing→translating→done/error; `direction` via `useState`; two-column grid wiring `DirectionToggle` + `useAudioCapture` (press-and-hold via `onPointerDown`/`onPointerUp`/`onPointerLeave`) + `SpanishPanel`/`KoreanPanel`; submits confirmed draft to `/api/interpret`, reads stream incrementally, splits on `"\n---\n"` into translated/gloss; "Nueva sesión" resets state + clears storage key. Spec: interpreter-ui Req1, Req2, Req5; voice-capture Req4. Gate: tc/lint/build.
-- [ ] 5.2 `[S]` (same file, after 5.1) Add `useEffect` persistence: sync only `done`/`error` turns to `localStorage` key `interpreter:v1:turns` on change; read/restore on mount. Spec: interpreter-ui Req4 (survives refresh, empty storage no error), Req5 (reset clears entry). Gate: tc/lint/build **+ manual** (refresh persistence has no automated coverage).
+- [x] 5.1 Rewrite `app/page.tsx` (`'use client'`): `useReducer` for `{turns,draft,captureStatus}` with named actions covering record→transcribing→translating→done/error; `direction` via `useState`; two-column grid wiring `DirectionToggle` + `useAudioCapture` (press-and-hold via `onPointerDown`/`onPointerUp`/`onPointerLeave`) + `SpanishPanel`/`KoreanPanel`; submits confirmed draft to `/api/interpret`, reads stream incrementally, splits on `"\n---\n"` into translated/gloss; "Nueva sesión" resets state + clears storage key. Spec: interpreter-ui Req1, Req2, Req5; voice-capture Req4. Gate: tc/lint/build — PASSED.
+- [x] 5.2 `[S]` (same file, after 5.1) Add `useEffect` persistence: sync only `done`/`error` turns to `localStorage` key `interpreter:v1:turns` on change; read/restore on mount. Spec: interpreter-ui Req4 (survives refresh, empty storage no error), Req5 (reset clears entry). Gate: tc/lint/build — PASSED **+ manual** (refresh persistence has no automated coverage — Phase 6, out of scope for this batch).
 
 ## Phase 6: Manual Verification (no automated gate covers these)
 
