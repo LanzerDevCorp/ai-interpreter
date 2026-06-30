@@ -34,3 +34,7 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.vercel
+
+# local tooling (machine-specific paths)
+.atl/

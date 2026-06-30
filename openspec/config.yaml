@@ -1,0 +1,48 @@
+schema: spec-driven
+
+context: |
+  Next.js 16 (App Router) + TypeScript (strict) + Tailwind CSS v4 + shadcn/ui.
+  AI: `ai` package v7 (AI SDK v7, NOT v6 — breaking renames: system->instructions,
+  toTextStreamResponse deprecated -> createTextStreamResponse). Routed through
+  Vercel AI Gateway via plain "provider/model" strings (DEFAULT_MODEL env var),
+  auth via Vercel OIDC (.env.local, not committed).
+  App: ES<->KO real-time interpreter (see /plan.md for full architecture/decisions).
+  Package manager: npm. No test framework configured (lint + typecheck only).
+
+strict_tdd: false
+
+testing:
+  test_runner: none
+  test_command: ""
+  unit: false
+  integration: false
+  e2e: false
+  coverage: false
+  linter: "npm run lint"
+  type_checker: "npm run typecheck"
+  formatter: "npm run format"
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Cross-check against decisions already recorded in /plan.md before proposing alternatives
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Document AI SDK v7 usage explicitly (instructions, not system; createTextStreamResponse, not toTextStreamResponse)
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    - Follow existing code patterns (App Router conventions, shadcn/ui components, @/ path alias)
+    - Run `npm run lint` and `npm run typecheck` after changes (no test runner available)
+    tdd: false
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: "npm run build"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
