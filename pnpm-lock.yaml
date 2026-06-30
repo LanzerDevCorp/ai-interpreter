@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@ai-sdk/elevenlabs':
+        specifier: ^3.0.2
+        version: 3.0.2(zod@4.4.3)
       '@ai-sdk/groq':
         specifier: ^4.0.2
         version: 4.0.2(zod@4.4.3)
@@ -80,6 +83,12 @@ importers:
         version: 5.9.3
 
 packages:
+
+  '@ai-sdk/elevenlabs@3.0.2':
+    resolution: {integrity: sha512-/FB9cC1FAFmJ2SLNumJRZzNfWbm4lCnGo8SkuvKYWCfzdb629kJPdNV3lM5L73rzWFEMJDz9rEr8RC6Vudg7hQ==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
 
   '@ai-sdk/gateway@4.0.5':
     resolution: {integrity: sha512-Zh4hxzrelJE0DDhaH7bXeUsB7ecFusRs+F7XHf0Dael6ekKG1GZCZgPw/lALEqyn1Vk1hLB+jjQgIoMTjA5m3A==}
@@ -3044,6 +3053,12 @@ packages:
     resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
 snapshots:
+
+  '@ai-sdk/elevenlabs@3.0.2(zod@4.4.3)':
+    dependencies:
+      '@ai-sdk/provider': 4.0.0
+      '@ai-sdk/provider-utils': 5.0.1(zod@4.4.3)
+      zod: 4.4.3
 
   '@ai-sdk/gateway@4.0.5(zod@4.4.3)':
     dependencies:
