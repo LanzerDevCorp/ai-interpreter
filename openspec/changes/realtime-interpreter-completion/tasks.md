@@ -39,10 +39,10 @@ Chain strategy: pending
 
 ## Phase 3: Voice Capture (depends on 1.1; independent of Phase 2)
 
-- [ ] 3.1 `[P]` Add `@ai-sdk/groq` to `package.json`, install. Design: Migration/Rollout. Gate: build (install resolves, no peer conflicts).
-- [ ] 3.2 `[P]` Create `.env.local.example` with `DEFAULT_MODEL` and `GROQ_API_KEY` placeholders. Gate: manual review.
-- [ ] 3.3 `[S]` (after 3.1) `app/api/transcribe/route.ts`: POST FormData `audio`/`direction`; validate `File` present/non-empty (400) and ≤20MB (413); `groq.transcription('whisper-large-v3-turbo')` via `transcribe()` with `AbortSignal.timeout(30_000)`; map errors 429/502/504/500; `runtime='nodejs'`. Confirm `providerOptions.groq` language field name against installed types (design Open Question). Spec: voice-capture Req2, Req3 (missing-audio, failure). Gate: tc/lint/build.
-- [ ] 3.4 `[S]` (after 1.1, 3.3) `hooks/useAudioCapture.ts`: `useAudioCapture({direction,onTranscript})`; `getUserMedia` on `start()`, `MediaRecorder` (webm/opus), `dataavailable` collection, `stop()` finalizes Blob → POST `/api/transcribe`; status `idle|recording|transcribing|error`; stop tracks on unmount/after capture; no silence-based auto-stop, no interim text. Spec: voice-capture Req1, Req3 (permission denied), Req4, Req5 (no interim). Gate: tc/lint/build **+ manual** (mic permission/press-hold behavior cannot be verified by build/lint alone).
+- [x] 3.1 `[P]` Add `@ai-sdk/groq` to `package.json`, install. Design: Migration/Rollout. Gate: build (install resolves, no peer conflicts).
+- [x] 3.2 `[P]` Create `.env.local.example` with `DEFAULT_MODEL` and `GROQ_API_KEY` placeholders. Gate: manual review.
+- [x] 3.3 `[S]` (after 3.1) `app/api/transcribe/route.ts`: POST FormData `audio`/`direction`; validate `File` present/non-empty (400) and ≤20MB (413); `groq.transcription('whisper-large-v3-turbo')` via `transcribe()` with `AbortSignal.timeout(30_000)`; map errors 429/502/504/500; `runtime='nodejs'`. Confirm `providerOptions.groq` language field name against installed types (design Open Question). Spec: voice-capture Req2, Req3 (missing-audio, failure). Gate: tc/lint/build.
+- [x] 3.4 `[S]` (after 1.1, 3.3) `hooks/useAudioCapture.ts`: `useAudioCapture({direction,onTranscript})`; `getUserMedia` on `start()`, `MediaRecorder` (webm/opus), `dataavailable` collection, `stop()` finalizes Blob → POST `/api/transcribe`; status `idle|recording|transcribing|error`; stop tracks on unmount/after capture; no silence-based auto-stop, no interim text. Spec: voice-capture Req1, Req3 (permission denied), Req4, Req5 (no interim). Gate: tc/lint/build **+ manual** (mic permission/press-hold behavior cannot be verified by build/lint alone).
 
 ## Phase 4: UI Components (depends on 1.1; independent of Phase 2/3)
 
