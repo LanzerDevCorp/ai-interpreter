@@ -42,7 +42,7 @@ Chain strategy: stacked-to-main
 
 ## Phase 3: Translation Verification (depends on 1.2; independent of Phase 2/4)
 
-- [ ] 3.1 `app/api/backtranslate/route.ts` (NEW, `runtime='nodejs'`): `POST {translated, direction}`; 400 on bad input; `generateText({model: process.env.DEFAULT_MODEL!, system: buildBackTranslationPrompt(direction), prompt: translated, abortSignal: 20s})` → `Response.json({backTranslation: result.text.trim()})`; catch timeout→504, else→502. Spec: translation-verification Req "Backtranslate Endpoint Contract", "Verification Failure Handling". Design §2. Gate: tc/lint/build **+ manual curl** (uses existing `DEFAULT_MODEL`/Gateway credentials already configured — no new key needed).
+- [x] 3.1 `app/api/backtranslate/route.ts` (NEW, `runtime='nodejs'`): `POST {translated, direction}`; 400 on bad input; `generateText({model: process.env.DEFAULT_MODEL!, system: buildBackTranslationPrompt(direction), prompt: translated, abortSignal: 20s})` → `Response.json({backTranslation: result.text.trim()})`; catch timeout→504, else→502. Spec: translation-verification Req "Backtranslate Endpoint Contract", "Verification Failure Handling". Design §2. Gate: tc/lint/build **+ manual curl** (uses existing `DEFAULT_MODEL`/Gateway credentials already configured — no new key needed).
 
 ## Phase 4: Voice Capture (fully independent — no dependency on Phase 1–3)
 
