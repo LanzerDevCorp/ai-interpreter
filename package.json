@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/elevenlabs": "^3.0.2",
     "@ai-sdk/groq": "^4.0.2",
     "@base-ui/react": "^1.6.0",
     "ai": "^7.0.6",
