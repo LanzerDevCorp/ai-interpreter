@@ -46,7 +46,7 @@ Chain strategy: stacked-to-main
 
 ## Phase 4: Voice Capture (fully independent — no dependency on Phase 1–3)
 
-- [ ] 4.1 `hooks/useAudioCapture.ts`: add `useEffect` (empty deps) registering `document` `visibilitychange` listener; on `hidden` + `recorderRef.current?.state==='recording'`, call `recorderRef.current.stop()` (same path as `stop()`). Public API (`start`/`stop`) unchanged — no `toggle()` added. Spec: voice-capture Req "Visibility-Loss Auto-Stop". Design §5, ADR-6. Gate: tc/lint/build **+ manual** (tab-hide behavior, browser-only — see 6.2).
+- [x] 4.1 `hooks/useAudioCapture.ts`: add `useEffect` (empty deps) registering `document` `visibilitychange` listener; on `hidden` + `recorderRef.current?.state==='recording'`, call `recorderRef.current.stop()` (same path as `stop()`). Public API (`start`/`stop`) unchanged — no `toggle()` added. Spec: voice-capture Req "Visibility-Loss Auto-Stop". Design §5, ADR-6. Gate: tc/lint/build **+ manual** (tab-hide behavior, browser-only — see 6.2).
 
 ## Phase 5: UI Wiring (depends on Phase 1–4 merged; same-file edits to `page.tsx` are sequential)
 
