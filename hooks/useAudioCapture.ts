@@ -139,5 +139,25 @@ export function useAudioCapture({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Safety net for click-to-start/click-to-stop capture: press-and-hold
+  // made a forgotten recording impossible (releasing the pointer always
+  // stopped it), but a toggle doesn't. Force-stop if the tab is hidden
+  // while actively recording, via the same path stop() uses. Reads the
+  // recorder's own state (not the `status` state value) so this effect
+  // never needs to re-subscribe.
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (
+        document.visibilityState === 'hidden' &&
+        recorderRef.current?.state === 'recording'
+      ) {
+        recorderRef.current.stop();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () =>
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+  }, []);
+
   return { status, error, start, stop };
 }
